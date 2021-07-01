@@ -29,6 +29,11 @@ public class PlayerController : MonoBehaviour
         playerRb.AddForce(focalPoint.transform.forward * speed * forwardInput);
 
         powerupIndicator.transform.position = transform.position + new Vector3(0, -0.5f, 0);
+
+        if(currentPowerUp == PowerUpType.Rockets && Input.GetKeyDown(KeyCode.F))
+        {
+            LaunchRockets();
+        }
     }
 
     IEnumerator PowerupCountdownRoutine()
@@ -48,7 +53,7 @@ public class PlayerController : MonoBehaviour
             powerupIndicator.gameObject.SetActive(true);
             Destroy(other.gameObject);
 
-            if(powerUpCountdown != null)
+            if (powerUpCountdown != null)
             {
                 StopCoroutine(powerUpCountdown);
             }
@@ -58,15 +63,28 @@ public class PlayerController : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Enemy") && hasPowerup)
+        if (collision.gameObject.CompareTag("Enemy") && currentPowerUp == PowerUpType.Pushback)
         {
             Rigidbody enemyRb = collision.gameObject.GetComponent<Rigidbody>();
             // Get the orientation vector to Knockback the enemy
             Vector3 awayFromPlayer = (collision.gameObject.transform.position - transform.position);
 
-            Debug.Log("bateu");
-
             enemyRb.AddForce(awayFromPlayer * powerupStrength, ForceMode.Impulse);
+            Debug.Log("Player collided with: " + collision.gameObject.name + " with powerup set to " + currentPowerUp.ToString());
+        }
+    }
+
+    /*
+        Here we are using the same logic as our spawn manager to find all the enemies. We are then launching
+        our missiles at each one. We launch the missiles from above the player, to stop the collision from
+        pushing us back.
+    */
+    void LaunchRockets()
+    {
+        foreach (var enemy in FindObjectsOfType<Enemy>())
+        {
+            tmpRocket = Instantiate(rocketPrefab, transform.position + Vector3.up, Quaternion.identity);
+            tmpRocket.GetComponent<RocketBehavior>().Fire(enemy.transform);
         }
     }
 }

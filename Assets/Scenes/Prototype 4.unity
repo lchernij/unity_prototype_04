@@ -277,7 +277,9 @@ MonoBehaviour:
   enemiesPrefab:
   - {fileID: 856531340755928156, guid: 707d21c770885234dbff85e68c784d60, type: 3}
   - {fileID: 856531340755928156, guid: 5bcf926799f52c94388e7e9425082c56, type: 3}
-  powerupPrefab: {fileID: 6554049452575639775, guid: 07f1b977b75e37a4e8b6c31bd2736c83, type: 3}
+  powerupPrefabs:
+  - {fileID: 6554049452575639775, guid: 07f1b977b75e37a4e8b6c31bd2736c83, type: 3}
+  - {fileID: 6554049452575639775, guid: 855515c65e0ab3747946e2d199657d7a, type: 3}
   enemyCount: 0
   waveNumber: 1
 --- !u!4 &479372430
@@ -688,6 +690,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -755,6 +758,8 @@ MonoBehaviour:
   powerupIndicator: {fileID: 1700600890}
   speed: 5
   hasPowerup: 0
+  currentPowerUp: 0
+  rocketPrefab: {fileID: 4131730339104943156, guid: a2c0ce0bad9f57a4a8852edcc30bf6cb, type: 3}
 --- !u!1 &1700600890 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1742899641471652, guid: 923deea38dc6a8843b15db7638919c1e, type: 3}
